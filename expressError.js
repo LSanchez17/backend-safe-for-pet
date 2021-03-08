@@ -38,7 +38,7 @@ class ExpressError extends Error {
   }
 
   class LimitHit extends ExpressError {
-    constructor(message = 'You are over your request limit, please wait') {
+    constructor(message = 'Rate Limit Hit') {
       super(message, 500);
     }
   }
@@ -56,5 +56,6 @@ class ExpressError extends Error {
     NotFoundError,
     UnauthorizedError,
     BadRequestError,
-    ForbiddenError,
+    LimitHit,
+    ForbiddenError
   };

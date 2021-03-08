@@ -77,7 +77,7 @@ class VolumeHandler {
         return this.size;
     }
 
-    checkRequestIn(ip){
+    static checkRequestIn(ip){
         if(this.size === 0 && this.first === null){
             return false;
         }
@@ -88,6 +88,7 @@ class VolumeHandler {
             if(currentNode.ip === ip){
                 return true;
             }
+            currentNode = currentNode.next
         }
         return false;
     }

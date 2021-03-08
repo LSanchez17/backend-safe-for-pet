@@ -16,15 +16,16 @@ class AnimalApi{
         return results;
     }
 
-    static async specificFood(whichFood){
+    static async specificFood(whichFood, whichAnimal){
         let query = await db.query(`SELECT poisonous
                                     FROM FoodStatus
-                                    WHERE foodName = $1
-                                    `,[whichFood]);
+                                    WHERE foodName = $1 AND animal = $2`,[whichFood, whichAnimal]);
         let result = query.rows[0];
-        
-        if(!results){
-            throw new NotFoundError(`That food is currently not in our system, please try again later`);
+
+        // console.log('making a request')
+
+        if(!result){
+            throw new NotFoundError(`Food not found, please try ingredients in food item`);
         }
 
         return result;

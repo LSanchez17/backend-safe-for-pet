@@ -1,18 +1,18 @@
 const VolumeHandler = require('../helpers/VolumeHandler');
-const { LimiHit } = require('../expressError');
+const { LimitHit } = require('../expressError');
 
 const needsThrottling = (req, res, next) => {
     try{
         let userIp = req.ip;
-        let throttleUser = await VolumeHandler.checkRequestIn(userIp);
+        let throttleUser = VolumeHandler.checkRequestIn(userIp);
         if(throttleUser){
-            throw new LimiHit();
+            throw new LimitHit();
         }
-        next();
+        return next();
     }
     catch(e){
         return next(e);
     }
 }
 
-module.exports = needsThrottling;
+module.exports = {needsThrottling};

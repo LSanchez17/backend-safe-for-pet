@@ -18,4 +18,4 @@ console.log('config file');
 console.log(`listening on port ${PORT}`);
 console.log(`connected to database: ${getDatabaseUri()}`);
 
-module.exports = {SECRET_KEY, PORT};
+module.exports = {SECRET_KEY, PORT, getDatabaseUri};
