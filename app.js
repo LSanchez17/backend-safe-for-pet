@@ -1,0 +1,34 @@
+const express = require('express');
+const cors = require('cors');
+const dogRoutes = require('./routes/dog');
+const { NotFound } = require('./expressError');
+
+const app = express();
+
+app.use(cors());
+app.options('*', cors());
+app.use(express.json());
+
+//handle routes for dogs specifially
+app.use('/dogs', dogRoutes);
+//future update, handle routes for animal, similar to /dogs
+
+//404 handler
+app.use( (req, res, next) => {
+    return next(new NotFound());
+});
+
+//errors in general
+app.use( (err, req, res, next) => {
+    if(process.env.NODE_ENV !== 'test'){
+        console.error(err.stack);
+    }
+    const status = err.status || 500;
+    const message = err.message;
+
+    return res.status(status).json({
+        error: {message, status}
+    });
+});
+
+module.exports = app;
