@@ -5,7 +5,7 @@ describe('config can come from env', () => {
     process.env.DATABASE_URL = 'DNE';
     process.env.NODE_ENV = 'AlsoDNE';
 
-    const config = require(''./config');
+    const config = require('./config');
     expect(config.SECRET_KEY).toEqual('superSecret');
     //remember, we set our port to a NUMBER with the + sign
     expect(config.PORT).toEqual(8000);

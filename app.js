@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dogRoutes = require('./routes/dog');
+const VolumeHandler = require('./helpers/VolumeHandler');
 const { NotFoundError } = require('./expressError');
 
 const app = express();
@@ -8,6 +9,7 @@ const app = express();
 app.use(cors());
 app.options('*', cors());
 app.use(express.json());
+app.locals.queue = new VolumeHandler();
 
 //handle routes for dogs specifially
 app.use('/dogs', dogRoutes);

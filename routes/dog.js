@@ -26,7 +26,7 @@ router.get('/', needsThrottling, async (req, res, next) => {
 router.get('/search', needsThrottling, async (req, res, next) => {
     try{
         let whichFood = req.query;
-        console.log(whichFood)
+        // console.log(whichFood);
 
         if(typeof whichFood !== 'string'){
             whichFood = whichFood.toString();
