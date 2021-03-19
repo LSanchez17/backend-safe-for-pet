@@ -3,7 +3,6 @@ const AnimalApi = require('../models/AnimalApi');
 const { needsThrottling } = require('../middleware/throttle');
 
 const router = new express.Router();
-const CurrentAnimal = 'dog';
 
 /*
 * Handles the request for dogs, specifically
@@ -25,16 +24,17 @@ router.get('/', needsThrottling, async (req, res, next) => {
 
 router.get('/search', needsThrottling, async (req, res, next) => {
     try{
-        let whichFood = req.query;
+        let whichFood = req.query.foodItem.toLowerCase();
+        let whichAnimal = req.query.whichAnimal.toLowerCase();
         // console.log(whichFood);
 
         if(typeof whichFood !== 'string'){
-            whichFood = whichFood.toString();
+            throw new Error('Invalid input type');
         }
 
-        const resp = await AnimalApi.specificFood(whichFood, CurrentAnimal);
+        const resp = await AnimalApi.specificFood(whichFood, whichAnimal);
         
-        return resp.json({answer: resp});
+        return res.json({answer: resp});
     }
     catch(e){
         return next(e);

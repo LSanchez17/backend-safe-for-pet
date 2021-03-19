@@ -1,27 +1,30 @@
-const VolumeHandler = require('../helpers/VolumeHandler');
 const { LimitHit } = require('../expressError');
-const app = require('../app');
 
+//we use the middlewar req.app.locals to access the instance of the VolumeHandler class
+//then call methods upon it based on the requests and number of requests
+//only one instance per server, to handle many calls
 const needsThrottling = (req, res, next) => {
     try{
         //grab ip, and a value if it exist
         let userIp = req.ip;
         let requestValue = req.query || '';
 
+        console.log(userIp, requestValue)
         //input them into the queue
-        app.locals.queue.enqueue(requestValue, userIp);
+        req.app.locals.queue.enqueue(requestValue, userIp);
 
+        console.log(req.app.locals.queue)
         //figure out if our queue of requests is at limit
-        let throttleUser = VolumeHandler.checkRequestIn(userIp);
+        let throttleUser = req.app.locals.queue.checkRequestIn(userIp);
 
         //if its limited, stop request, remove item added to queue
         if(throttleUser){
-            app.locals.queue.leaveQueue();
+            req.app.locals.queue.leaveQueue();
             throw new LimitHit();
         }
         
         //didn't have to stop the requests, process another item in the queue
-        app.locals.queue.dequeue();
+        req.app.locals.queue.dequeue();
         return next();
     }
     catch(e){

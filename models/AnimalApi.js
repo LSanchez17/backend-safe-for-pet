@@ -1,5 +1,5 @@
 const db = require('../db');
-const { BadRequestError, NotFoundError } = require('../expressError');
+const { NotFoundError } = require('../expressError');
 
 class AnimalApi{
     static async getAll(whichAnimal){
@@ -7,7 +7,7 @@ class AnimalApi{
                      FROM FoodStatus
                      WHERE animal = $1`, [whichAnimal]);
 
-        let results = query.rows[0];
+        let results = query.rows;
 
         if(!results){
             throw new NotFoundError(`No data found for ${whichAnimal}`);
@@ -17,7 +17,7 @@ class AnimalApi{
     }
 
     static async specificFood(whichFood, whichAnimal){
-        let query = await db.query(`SELECT poisonous
+        let query = await db.query(`SELECT poisonous, foodname, reference
                                     FROM FoodStatus
                                     WHERE foodName = $1 AND animal = $2`,[whichFood, whichAnimal]);
         let result = query.rows[0];

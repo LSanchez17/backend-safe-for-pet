@@ -19,7 +19,7 @@ class VolumeHandler {
         this.size = 0;
     }
 
-    static enqueue(val, ip){
+    enqueue(val, ip){
         //empty? return first item as last item
         if(this.size === 0){
             let newNode = new Node(val);
@@ -41,7 +41,7 @@ class VolumeHandler {
         return;
     }
 
-    static dequeue(){
+    dequeue(){
         if(this.size === 0){
             throw new Error;
         }
@@ -62,7 +62,7 @@ class VolumeHandler {
         return currentNode.val;
     }
 
-    static leaveQueue(){
+    leaveQueue(){
         //kick out the last item to enter the queue
         if(this.size === 0){
             throw new Error;
@@ -86,22 +86,22 @@ class VolumeHandler {
         }
     }
 
-    static peekFirstNode(){
+    peekFirstNode(){
         return this.first.val;
     }
 
-    static isEmpty(){
+    isEmpty(){
         if(this.size === 0 && this.first === null){
             return true;
         }
         return false;
     }
 
-    static peekSize(){
+    peekSize(){
         return this.size;
     }
 
-    static checkRequestIn(ip){
+    checkRequestIn(ip){
         if(this.size === 0 && this.first === null){
             return false;
         }
