@@ -7,9 +7,9 @@ const needsThrottling = (req, res, next) => {
     try{
         //grab ip, and a value if it exist
         let userIp = req.ip;
-        let requestValue = req.query || '';
-
-        console.log(userIp, requestValue)
+        let requestValue = req.params;
+        // console.log(userIp, requestValue)
+        
         //input them into the queue
         req.app.locals.queue.enqueue(requestValue, userIp);
 

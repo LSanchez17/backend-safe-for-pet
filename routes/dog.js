@@ -1,6 +1,7 @@
 const express = require('express');
 const AnimalApi = require('../models/AnimalApi');
 const { needsThrottling } = require('../middleware/throttle');
+const {FoodNotFoundError} = require('../expressError');
 
 const router = new express.Router();
 
@@ -10,31 +11,34 @@ const router = new express.Router();
 * Will later handle admin user routing
 */
 
-//All bad foods for dogs
+//All bad and good foods for dogs
 router.get('/', needsThrottling, async (req, res, next) => {
     try{
-        const resp = await AnimalApi.getAll(CurrentAnimal);
+        const foods = await AnimalApi.getAll(CurrentAnimal = 'dog');
         
-        return res.json({foods: [resp]});
+        return res.json({foods});
     }
     catch(e){
         return next(e);
     }
 });
 
-router.get('/search', needsThrottling, async (req, res, next) => {
+router.get('/:foodItem', needsThrottling, async (req, res, next) => {
     try{
-        let whichFood = req.query.foodItem.toLowerCase();
-        let whichAnimal = req.query.whichAnimal.toLowerCase();
+        let whichFood = req.params.foodItem.toLowerCase();
+        // let whichAnimal = req.param.whichAnimal.toLowerCase();
         // console.log(whichFood);
 
         if(typeof whichFood !== 'string'){
             throw new Error('Invalid input type');
         }
 
-        const resp = await AnimalApi.specificFood(whichFood, whichAnimal);
+        const food = await AnimalApi.specificFood(whichFood, whichAnimal = 'dog');
         
-        return res.json({answer: resp});
+        if(!food){
+            throw new FoodNotFoundError();
+        }
+        return res.json({food});
     }
     catch(e){
         return next(e);

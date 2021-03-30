@@ -1,5 +1,5 @@
 const db = require('../db');
-const { NotFoundError } = require('../expressError');
+const { NotFoundError, FoodNotFoundError } = require('../expressError');
 
 class AnimalApi{
     static async getAll(whichAnimal){
@@ -25,7 +25,7 @@ class AnimalApi{
         // console.log('making a request')
 
         if(!result){
-            throw new NotFoundError(`Food not found, please try ingredients in food item`);
+            throw new FoodNotFoundError(whichFood);
         }
 
         return result;

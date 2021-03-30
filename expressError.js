@@ -37,6 +37,13 @@ class ExpressError extends Error {
     }
   }
 
+  class FoodNotFoundError extends ExpressError {
+    constructor(foodItem){
+      let concatMessage = `'The food you searched for, ${foodItem}, is not in our dataset.  Try submitting its ingredients if applicable instead'`
+      super(concatMessage, 404);
+    }
+  }
+
   class LimitHit extends ExpressError {
     constructor(message = 'Rate Limit Hit') {
       super(message, 500);
@@ -56,6 +63,7 @@ class ExpressError extends Error {
     NotFoundError,
     UnauthorizedError,
     BadRequestError,
+    FoodNotFoundError,
     LimitHit,
     ForbiddenError
   };
