@@ -23,10 +23,18 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
     try{
+        console.log(req.ip)
         //get data, and post it user visit, etc
-        let userVisit = await loggingApi.postVisit(req.ip);
-        
-        return;
+        let userVisit = await loggingApi.checkPreviousVisit(req.ip);
+
+        if(userVisit){
+            await loggingApi.UpdateVisitData(req.ip);
+            return res.json({message: 'Success'})
+        }
+        else{
+            await loggingApi.postVisit(req.ip);
+            return res.json({message: 'Success'});
+        }
     }
     catch(e){
         return next(e);
