@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dogRoutes = require('./routes/dog');
+const logRoutes = require('./routes/logging');
 const VolumeHandler = require('./helpers/VolumeHandler');
 const { NotFoundError } = require('./expressError');
 
@@ -13,6 +14,7 @@ app.locals.queue = new VolumeHandler();
 
 //handle routes for dogs specifially
 app.use('/dogs', dogRoutes);
+app.use('/logs', logRoutes);
 
 //future update, handle routes for animal, similar to /dogs
 

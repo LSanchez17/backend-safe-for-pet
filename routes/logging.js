@@ -24,7 +24,7 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
     try{
         //get data, and post it user visit, etc
-        let userVisit = await loggingApi.postVisit();
+        let userVisit = await loggingApi.postVisit(req.ip);
         
         return;
     }
