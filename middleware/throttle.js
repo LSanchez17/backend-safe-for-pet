@@ -9,11 +9,11 @@ const needsThrottling = (req, res, next) => {
         let userIp = req.ip;
         let requestValue = req.params;
         // console.log(userIp, requestValue)
-        
+
         //input them into the queue
         req.app.locals.queue.enqueue(requestValue, userIp);
 
-        console.log(req.app.locals.queue)
+        // console.log(req.app.locals.queue)
         //figure out if our queue of requests is at limit
         let throttleUser = req.app.locals.queue.checkRequestIn(userIp);
 

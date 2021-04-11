@@ -1,4 +1,5 @@
 const express = require('express');
+const { logVoice } = require('../middleware/logVoice');
 const loggingApi = require('../models/loggingApi');
 
 const router = new express.Router();
@@ -23,7 +24,7 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
     try{
-        console.log(req.ip)
+        // console.log(req.ip)
         //get data, and post it user visit, etc
         let userVisit = await loggingApi.checkPreviousVisit(req.ip);
 
@@ -41,6 +42,13 @@ router.post('/', async (req, res, next) => {
     }
 })
 
-
+router.post('/voice', logVoice, async (req, res, next) => {
+    try{
+        return res.json({status: 'voicelog updated'});
+    }
+    catch(e){
+        return next(e);
+    }
+})
 
 module.exports = router;

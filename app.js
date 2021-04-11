@@ -20,6 +20,7 @@ app.use('/logs', logRoutes);
 
 //404 handler
 app.use( (req, res, next) => {
+    console.log(req.params)
     return next(new NotFoundError());
 });
 

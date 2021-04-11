@@ -36,8 +36,9 @@ router.get('/:foodItem', needsThrottling, async (req, res, next) => {
         const food = await AnimalApi.specificFood(whichFood, whichAnimal = 'dog');
         
         if(!food){
-            throw new FoodNotFoundError();
+            return new FoodNotFoundError();
         }
+
         return res.json({food});
     }
     catch(e){

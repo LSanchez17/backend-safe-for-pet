@@ -5,7 +5,7 @@ class loggingApi {
     static async getAll(){
         //returns list of all visitors with timestamps
         let query = await db.query(`SELECT * 
-                    FROM userlogs`);
+                    FROM userlogs, voicelogs`);
         
         let results = query.rows;
 
@@ -49,6 +49,17 @@ class loggingApi {
         }
 
         return false;
+    }
+
+    static async storeVoiceLog(data){
+        console.log(data);
+        let query = await db.query('INSERT INTO voicelogs(voice_log) VALUES($1) RETURNING voice_log', [data]);
+
+        if(!query.rows[0]){
+            throw new Error('Something went wrong!');
+        }
+
+        return;
     }
 };
 
