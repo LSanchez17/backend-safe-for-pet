@@ -16,7 +16,7 @@ router.get('/', needsThrottling, async (req, res, next) => {
     try{
         const foods = await AnimalApi.getAll(CurrentAnimal = 'dog');
         
-        return res.json({foods});
+        return res.json(foods);
     }
     catch(e){
         return next(e);

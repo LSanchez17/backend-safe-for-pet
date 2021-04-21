@@ -4,9 +4,10 @@ const { NotFoundError, FoodNotFoundError } = require('../expressError');
 class AnimalApi{
     static async getAll(whichAnimal){
         let query = await db.query(`SELECT *
-                     FROM FoodStatus
+                     FROM foodstatus
                      WHERE animal = $1`, [whichAnimal]);
 
+        // console.log(query)
         let results = query.rows;
 
         if(!results){

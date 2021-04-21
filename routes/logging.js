@@ -15,7 +15,8 @@ router.get('/', async (req, res, next) => {
         //get a list of visitors, voice logs, etc for front end manipulation
         let loggedData = await loggingApi.getAll();
 
-        return res.json({loggedData});
+        // console.log(loggedData)
+        return res.json(loggedData);
     }
     catch(e){
         return next(e);

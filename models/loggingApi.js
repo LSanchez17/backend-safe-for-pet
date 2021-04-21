@@ -3,14 +3,14 @@ const { NotFoundError } = require('../expressError');
 
 class loggingApi {
     static async getAll(){
-        //returns list of all visitors with timestamps
+        //returns list of all data
         let query = await db.query(`SELECT * 
-                    FROM userlogs, voicelogs`);
+                    FROM voicelogs`);
         
         let results = query.rows;
 
         if(!results){
-            throw new NotFoundError(`No users have visited recently :(`);
+            throw new NotFoundError(`No users have entered data`);
         }
 
         return results;
