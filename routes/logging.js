@@ -52,4 +52,15 @@ router.post('/voice', logVoice, async (req, res, next) => {
     }
 })
 
+router.get('/users', async (req, res, next) => {
+    try{
+        let totalVisits = await loggingApi.getAllVisits();
+
+        return res.json({totalVisits})
+    }
+    catch(e){
+        return next(e);
+    }
+})
+
 module.exports = router;

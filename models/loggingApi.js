@@ -52,7 +52,7 @@ class loggingApi {
     }
 
     static async storeVoiceLog(data){
-        console.log(data);
+        // console.log(data);
         let query = await db.query('INSERT INTO voicelogs(voice_log) VALUES($1) RETURNING voice_log', [data]);
 
         if(!query.rows[0]){
@@ -60,6 +60,16 @@ class loggingApi {
         }
 
         return;
+    }
+
+    static async getAllVisits(){
+        let query = await db.query('SELECT COUNT(ip_address) AS totalVisits FROM userlogs');
+
+        if(!query.rows[0]){
+            throw new Error('Something went wrong!');
+        }
+
+        return query.rows[0];
     }
 };
 
