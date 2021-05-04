@@ -43,7 +43,7 @@ class loggingApi {
         //test to see if we have visited before!
         let query = await db.query('SELECT date_entered FROM userlogs WHERE ip_address = $1', [data]);
 
-        if(query.rows){
+        if(query.rows[0]){
             return true;
         }
 
