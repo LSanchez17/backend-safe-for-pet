@@ -19,8 +19,7 @@ class loggingApi {
     static async postVisit(data){
         //first time visiting
         let query = await db.query(`INSERT INTO userlogs(ip_address)
-                    VALUES($1)
-                    RETURNING date_entered`, [data]);
+                    VALUES($1)`, [data]);
                 
         let results = query.rows[0];
 
